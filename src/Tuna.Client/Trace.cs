@@ -4,7 +4,7 @@ namespace Tuna.Client;
 
 public class Trace
 {
-    public string? RequestString { get; set; }
-    public string? ResponseString { get; set; }
+    public string? Request { get; set; }
+    public string? Response { get; set; }
     public HttpStatusCode HttpStatusCode { get; set; }
 }

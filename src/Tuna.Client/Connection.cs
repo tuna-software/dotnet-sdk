@@ -2,17 +2,21 @@
 
 namespace Tuna.Client;
 
+/// <summary>
+/// Wrapper arround HttpClient
+/// Allows fine tuning http processing stack
+/// </summary>
 public class Connection : IDisposable
 {
     internal static Connection SingletonConnection = new Connection(); 
     
     internal HttpClient Http;
 
-    private bool _disposed = false;
+    private int _disposed = 0;
 
-    public Connection(ConnectionConfiguration? Configuration = null)
+    public Connection(ConnectionConfiguration? configuration = null)
     {
-        Configuration ??= new ConnectionConfiguration();
+        configuration ??= new ConnectionConfiguration();
 
         //TODO: Improve configuration, receive as options + keep alive
         var httpClientHandler = new SocketsHttpHandler
@@ -23,22 +27,22 @@ public class Connection : IDisposable
             ConnectTimeout = TimeSpan.FromSeconds(15)
         };
 
-        if (Configuration.WebProxy != null)
+        if (configuration.WebProxy != null)
         {
             httpClientHandler.UseProxy = true;
-            httpClientHandler.Proxy = Configuration.WebProxy;
+            httpClientHandler.Proxy = configuration.WebProxy;
         }
 
         Http = new HttpClient(httpClientHandler, false);
-        Http.Timeout = Configuration.Timeout;
+        Http.Timeout = configuration.Timeout;
     }
 
     public void Dispose()
     {
-        if (_disposed)
+        var disp = Interlocked.CompareExchange(ref _disposed, 1, 0);
+        if (disp == 0)
             return;
 
         Http.Dispose();
-        _disposed = true;
     }
 }

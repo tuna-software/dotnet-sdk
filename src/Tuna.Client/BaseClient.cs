@@ -21,11 +21,11 @@ public class BaseClient
         httpRequest.Headers.Add(HDRAPPTOKEN, _connection.Credentials.AppToken);
         httpRequest.Headers.Add(HDRACCOUNT, _connection.Credentials.Account);
 
-        var reqString = System.Text.Json.JsonSerializer.Serialize(request);
+        trace ??= new Trace();
 
-        if (trace != null) trace.RequestString = reqString;
+        trace.Request = System.Text.Json.JsonSerializer.Serialize(request);
 
-        httpRequest.Content = new StringContent(reqString, MediaTypeHeaderValue.Parse("application/json"));
+        httpRequest.Content = new StringContent(trace.Request, MediaTypeHeaderValue.Parse("application/json"));
 
         HttpResponseMessage? response = null;
 
@@ -43,13 +43,11 @@ public class BaseClient
                 response = await _connection.Connection.Http.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
             }
 
-            if (trace != null) trace.HttpStatusCode = response.StatusCode;
+            trace.Response = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-            var rspString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            trace.HttpStatusCode = response.StatusCode;
 
-            if (trace != null) trace.ResponseString = rspString;
-
-            return System.Text.Json.JsonSerializer.Deserialize<TResponse>(rspString);
+            return System.Text.Json.JsonSerializer.Deserialize<TResponse>(trace.Response);
         }
         finally
         {
