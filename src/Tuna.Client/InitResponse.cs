@@ -42,9 +42,9 @@ public class InitMethodResponse
 
     public string? OperationId { get; set; }
 
-    public string? MethodKey { get;  set; }
+    public string? MethodKey { get; set; }
 
-    public string? StatusAF { get;  set; }
+    public string? StatusAF { get; set; }
 
     public ResponseMessage? Message { get; set; }
 

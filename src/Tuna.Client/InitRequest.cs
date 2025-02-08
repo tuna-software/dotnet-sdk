@@ -1,12 +1,12 @@
 namespace Tuna.Client;
 
-public class InitRequest 
+public class InitRequest
 {
 
     public string? PartnerUniqueID
     {
-        get ;
-        set ;
+        get;
+        set;
     }
 
     public CustomerData? Customer { get; set; }

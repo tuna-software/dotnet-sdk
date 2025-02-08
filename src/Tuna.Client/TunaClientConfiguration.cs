@@ -1,6 +1,6 @@
 namespace Tuna.Client;
 
-public delegate HttpRequestMessage HttpRequestMessageFactory(HttpMethod method, string requestUriString);
+public delegate HttpRequestMessage HttpRequestMessageFactory(HttpMethod method, Uri uri);
 
 /// <summary>
 /// Configuration class for TunaClient
@@ -19,8 +19,7 @@ public class TunaClientConfiguration
 
     public TunaClientConfiguration()
     {
-        HttpRequestMessageFactory = (method, requestUriString) => new HttpRequestMessage(method, requestUriString);
+        HttpRequestMessageFactory = (method, uri) => new HttpRequestMessage(method, uri);
     }
-
 
 }

@@ -8,8 +8,8 @@ namespace Tuna.Client;
 /// </summary>
 public class Connection : IDisposable
 {
-    internal static Connection SingletonConnection = new Connection(); 
-    
+    internal static Connection SingletonConnection = new();
+
     internal HttpClient Http;
 
     private int _disposed = 0;

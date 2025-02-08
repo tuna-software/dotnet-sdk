@@ -6,7 +6,7 @@ public class TestForDebug
     [Fact]
     public async Task Test()
     {
-        TunaClient tunaClient = new TunaClient("",""); 
+        TunaClient tunaClient = new("", "");
 
 
         var json = """
@@ -63,6 +63,6 @@ public class TestForDebug
 
         InitRequest req = System.Text.Json.JsonSerializer.Deserialize<InitRequest>(json)!;
 
-        await tunaClient.Payments.InitPci(req).ConfigureAwait(false);
+        var ret = await tunaClient.Payments.InitPci(req).ConfigureAwait(false);
     }
 }
