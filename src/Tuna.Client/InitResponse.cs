@@ -1,6 +1,6 @@
 namespace Tuna.Client;
 
-public class InitResponse
+public class InitResponse : BaseResponse
 {
 
     public char? Status { get; set; }
@@ -11,15 +11,7 @@ public class InitResponse
 
     public string? PartnerUniqueId { get; set; }
 
-    public int Code { get; set; }
-
-    public ResponseMessage? Message { get; set; }
-
-    public string? OperationId { get; set; }
-
-    public string? ExternalId { get; set; }
 }
-
 
 public class ResponseMessage
 {
@@ -32,20 +24,8 @@ public class ResponseMessage
     public string? Info { get; set; }
 }
 
-public class InitMethodResponse
+public class InitMethodResponse : BaseMethodResponse
 {
-    public char? MethodType { get; set; }
-
-    public char? Status { get; set; }
-
-    public short MethodId { get; set; }
-
-    public string? OperationId { get; set; }
-
-    public string? MethodKey { get; set; }
-
-    public string? StatusAF { get; set; }
-
     public ResponseMessage? Message { get; set; }
 
     public object? AdditionalInfo { get; set; }
@@ -68,9 +48,9 @@ public class InitMethodResponse
 
     public Dictionary<string, string?>? AntiFraudResults { get; set; }
 
-    public List<ServiceStatus>? AntiFraud { get; set; }
+    public List<InitServiceStatus>? AntiFraud { get; set; }
 
-    public List<ServiceStatus>? Acquirer { get; set; }
+    public List<InitServiceStatus>? Acquirer { get; set; }
 }
 
 public class RedirectInfo
@@ -155,7 +135,7 @@ public class ExternalInfo
 {
     public string? SessionId { get; set; }
 }
-public class ServiceStatus
+public class InitServiceStatus
 {
     public string? Name { get; set; }
 
