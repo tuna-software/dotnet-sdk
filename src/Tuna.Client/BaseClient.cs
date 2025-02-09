@@ -66,7 +66,7 @@ public class BaseClient
             }
             else
             {
-                return await response.Content.ReadFromJsonAsync<TResponse>();
+                return await response.Content.ReadFromJsonAsync<TResponse>().ConfigureAwait(false);
             }
         }
         finally
